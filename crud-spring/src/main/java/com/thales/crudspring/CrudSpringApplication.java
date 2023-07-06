@@ -1,5 +1,7 @@
 package com.thales.crudspring;
 
+import java.util.ArrayList;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -19,12 +21,19 @@ public class CrudSpringApplication {
 	CommandLineRunner initDatabase(CourseRepository courseRepository) {
 		return args -> {
 			courseRepository.deleteAll();
+			var list = new ArrayList<Course>();
 
-			Course c = new Course();
-			c.setName("Angular com Spring");
-			c.setCategory("front-end");
+			Course c1 = new Course();
+			c1.setName("Angular com Spring");
+			c1.setCategory("front-end");
 
-			courseRepository.save(c);
+			Course c2 = new Course();
+			c2.setName("Spring");
+			c2.setCategory("back-end");
+
+			list.add(c2);
+			list.add(c1);
+			courseRepository.saveAll(list);
 		};
 	}
 
