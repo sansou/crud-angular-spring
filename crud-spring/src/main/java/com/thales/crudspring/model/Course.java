@@ -1,5 +1,7 @@
 package com.thales.crudspring.model;
 
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 import org.hibernate.validator.constraints.Length;
 
 import jakarta.persistence.Column;
@@ -14,6 +16,8 @@ import lombok.Data;
 
 @Data
 @Entity
+@SQLDelete(sql = "UPDATE Course SET status = 'Inativo' Where id = ?")
+@Where(clause = "status = 'Ativo'")
 public class Course {
 
   @Id
@@ -31,5 +35,11 @@ public class Course {
   @Pattern(regexp = "back-end|front-end")
   @Column(length = 20, nullable = false)
   private String category;
+
+  @NotNull
+  @Length(max = 10)
+  @Pattern(regexp = "Ativo|Inativo")
+  @Column(length = 10, nullable = false)
+  private String status = "Ativo";
 
 }
